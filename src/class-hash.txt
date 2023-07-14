@@ -1,0 +1,2 @@
+Contract class hash: 0x1c8af3647e5134379e30b45fee598e86b21006bbab4c7eadc72c05735ecd4b4
+Transaction hash: 0x18cdfe8f07b4f0472c9d7ff99563df6b6e92a3a3cac0a0e669033a4dccf1ce8

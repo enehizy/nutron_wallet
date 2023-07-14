@@ -1,0 +1,3 @@
+Invoke transaction for contract deployment was sent.
+Contract address: 0x01a0658cee38149372da530e682a07c26f45c0cc27607ec1d41d49e7da7fe909
+Transaction hash: 0x18fc7d9ee50b0e782bc87bb99dd5f5346fbffef428fb048b5a8ec8c19256c8b

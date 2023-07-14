@@ -1,0 +1,7 @@
+Account address: 0x0720d4dbd22f266380f9fa605274b12613ca2c15eec011bf9fdf6a09948db77f
+Public key: 0x03ae4482edb5dbb0ec78b5eccae1b186a916571e2716cfd8c3b724a9f96364b6
+Move the appropriate amount of funds to the account, and then deploy the account
+by invoking the 'starknet deploy_account' command.
+
+NOTE: This is a modified version of the OpenZeppelin account contract. The signature is computed
+differently.
