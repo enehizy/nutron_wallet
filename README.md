@@ -2,7 +2,7 @@
 
 ___
 
-cairo 1 contract for the nutron web wallet on starknet
+cairo contract for the nutron web wallet on starknet
 
 ___
 
