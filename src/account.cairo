@@ -20,7 +20,7 @@ mod Account {
       IERC165,
       INVALID_ID
     };
-    use nutron_wallet::spending_limit_manager::{
+    use nutron_wallet_contract::spending_limit_manager::{
         ISpendingLimitManagerLibraryDispatcher,
         ISpendingLimitManagerDispatcherTrait
     };
