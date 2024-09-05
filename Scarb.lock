@@ -5,15 +5,8 @@ version = 1
 name = "nutron_wallet_contract"
 version = "0.1.0"
 dependencies = [
- "openzeppelin_introspection",
  "snforge_std",
 ]
-
-[[package]]
-name = "openzeppelin_introspection"
-version = "0.16.0"
-source = "registry+https://scarbs.xyz/"
-checksum = "sha256:312bc2e531f036480ad7392dbb31042c38d875ef9dbb5578ea8de5c05e35b7d8"
 
 [[package]]
 name = "snforge_std"
