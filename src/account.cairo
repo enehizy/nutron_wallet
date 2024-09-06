@@ -13,9 +13,9 @@ trait IProtocolAccountTrait<T>{
     fn __validate_deploy__(
         self: @T, class_hash: felt252, salt: felt252, public_key: felt252
     ) -> felt252 ; 
-    fn __execute__(self: @T, calls: Array<Call>) -> Array<Span<felt252>>; 
+    fn __execute__(self: @T, calls: Array<Call>) -> Array<Span<felt252>>;
 }
-
+    
 #[starknet::contract(account)]
 mod Account {
  
@@ -29,9 +29,10 @@ const ISRC6_ID: felt252 = 0x2ceccef7f994940b3962a6c67e0ba4fcd37df7d131417c604f91
     
     use super::Call;
    use core::num::traits::Zero;
-   
+   use starknet::syscalls::call_contract_syscall;
     mod Errors{
         pub const INVALID_SIGNATURE:felt252='invalid signature';
+        pub const   INVALID_TRANSACTION_VERSION:felt252='invalid tx signature';
     }
     mod SUPPORTED_TX_VERSION {
         // Constants representing the supported versions
@@ -43,6 +44,7 @@ const ISRC6_ID: felt252 = 0x2ceccef7f994940b3962a6c67e0ba4fcd37df7d131417c604f91
     #[constructor]
     fn constructor(ref self: ContractState, public_key: felt252) {
         self.public_key.write(public_key);
+        self.version.write('beta');
     }
 
 
@@ -70,22 +72,26 @@ const ISRC6_ID: felt252 = 0x2ceccef7f994940b3962a6c67e0ba4fcd37df7d131417c604f91
         fn __execute__(self: @ContractState, calls: Array<Call>) -> Array<Span<felt252>> {
           self.validate_transaction();
           let tx_info=self._get_tx_info();
-          assert(tx_info.version == SUPPORTED_TX_VERSION::INVOKE,Errors::INVALID_SIGNATURE);
-         ArrayTrait::new() 
-
-            
+          assert(tx_info.version == SUPPORTED_TX_VERSION::INVOKE,Errors::INVALID_TRANSACTION_VERSION);
+         let mut results:Array<Span<felt252>> = ArrayTrait::new();
+         for call in calls{
+           let res =call_contract_syscall(call.to,call.selector,call.calldata).unwrap();
+           results.append(res);
+         };
+        results
+           
         }
         fn __validate__(self: @ContractState, calls: Array<Call>) -> felt252 {
             self.validate_transaction();
             let tx_info=self._get_tx_info();
-            assert(tx_info.version == SUPPORTED_TX_VERSION::INVOKE,Errors::INVALID_SIGNATURE);
+            assert(tx_info.version == SUPPORTED_TX_VERSION::INVOKE,Errors::INVALID_TRANSACTION_VERSION);
 
             starknet::VALIDATED
         }
         fn __validate_declare__(self: @ContractState, class_hash: felt252) -> felt252 {
             self.validate_transaction();
           let tx_info=self._get_tx_info();
-          assert(tx_info.version == SUPPORTED_TX_VERSION::DECLARE,Errors::INVALID_SIGNATURE);
+          assert(tx_info.version == SUPPORTED_TX_VERSION::DECLARE,Errors::INVALID_TRANSACTION_VERSION);
         
           starknet::VALIDATED
         }
@@ -94,7 +100,7 @@ const ISRC6_ID: felt252 = 0x2ceccef7f994940b3962a6c67e0ba4fcd37df7d131417c604f91
         ) -> felt252 {
             self.validate_transaction();
            let tx_info=self._get_tx_info();
-           assert(tx_info.version == SUPPORTED_TX_VERSION::DEPLOY_ACCOUNT,Errors::INVALID_SIGNATURE);
+           assert(tx_info.version == SUPPORTED_TX_VERSION::DEPLOY_ACCOUNT,Errors::INVALID_TRANSACTION_VERSION);
 
            starknet::VALIDATED
         }
@@ -126,5 +132,6 @@ const ISRC6_ID: felt252 = 0x2ceccef7f994940b3962a6c67e0ba4fcd37df7d131417c604f91
             tx_data
 
         }
+        
     }
 }
