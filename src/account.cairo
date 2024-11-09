@@ -7,7 +7,7 @@ pub trait IAccount<T> {
 }
 
 #[starknet::interface]
-trait IProtocolAccountTrait<T>{
+pub trait IProtocolAccountTrait<T>{
     fn __validate__(self: @T, calls: Array<Call>) -> felt252 ;
     fn __validate_declare__(self: @T, class_hash: felt252) -> felt252 ;
     fn __validate_deploy__(
@@ -61,8 +61,10 @@ const ISRC6_ID: felt252 = 0x2ceccef7f994940b3962a6c67e0ba4fcd37df7d131417c604f91
         fn is_valid_signature(
             self: @ContractState, hash: felt252, signature: Array<felt252>
         ) -> felt252 {
-           self.is_valid_signature(hash,signature);
-           starknet::VALIDATED
+          if self._is_valid_signature(hash,signature.span()){
+            return starknet::VALIDATED;
+          }
+         0
         }
     }
    
