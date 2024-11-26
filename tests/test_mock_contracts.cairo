@@ -1,8 +1,8 @@
 use nutron_wallet_contract::account::IProtocolAccountDispatcherTrait;
 use starknet::{ContractAddress,account::Call};
-use nutron_wallet_contract::account::{IProtocolAccountDispatcher,IAccountDispatcherTrait};
+use nutron_wallet_contract::account::{IProtocolAccountDispatcher};
 use nutron_wallet_contract::mocks::erc20::{IERC20Dispatcher,IERC20DispatcherTrait};
-use snforge_std::{declare,DeclareResultTrait,ContractClassTrait,start_cheat_caller_address};
+use snforge_std::{start_cheat_caller_address};
 use super::utils::{NUTRON_WALLET_ADDRESS,deploy_contract,deploy_account,sign_valid_transaction,TX_HASH};
 #[derive(Drop,Serde)]
 struct ERC20_ARGS{

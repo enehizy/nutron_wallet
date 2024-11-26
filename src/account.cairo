@@ -19,8 +19,9 @@ pub trait IProtocolAccount<T>{
 #[starknet::contract(account)]
 mod Account {
  
-
+use nutron_wallet_contract::global_account_registry::{IGlobalAccountRegistryDispatcher,IGlobalAccountRegistryDispatcherTrait};
 use super::IAccount;
+use starknet::ContractAddress;
 use core::iter::IntoIterator;
 const ISRC6_ID: felt252 = 0x2ceccef7f994940b3962a6c67e0ba4fcd37df7d131417c604f91e03caecc1cd;
     #[storage]
@@ -38,9 +39,12 @@ const ISRC6_ID: felt252 = 0x2ceccef7f994940b3962a6c67e0ba4fcd37df7d131417c604f91
     }
   
     #[constructor]
-    fn constructor(ref self: ContractState, public_key: felt252) {
+    fn constructor(ref self: ContractState, public_key: felt252,account_name:felt252,account_registry:ContractAddress) {
         self.public_key.write(public_key);
         self.version.write('beta');
+        
+        IGlobalAccountRegistryDispatcher {contract_address:account_registry}
+        .register_account(account_name,starknet::get_contract_address())
     }
 
 

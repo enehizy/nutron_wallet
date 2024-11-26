@@ -5,7 +5,7 @@ use super::utils::{gen_public_key,account_contract,sign_invalid_transaction,NUTR
 use nutron_wallet_contract::account::{IAccountDispatcherTrait};
 
 use snforge_std::signature::{
-    KeyPairTrait, stark_curve::{StarkCurveKeyPairImpl, StarkCurveSignerImpl, StarkCurveVerifierImpl},
+    stark_curve::{StarkCurveKeyPairImpl, StarkCurveSignerImpl, StarkCurveVerifierImpl},
 };
 use starknet::ContractAddress;
 
