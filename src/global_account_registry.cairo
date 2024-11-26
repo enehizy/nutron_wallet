@@ -22,13 +22,13 @@ mod GlobalAccountRegistry{
    }
   
    mod ERRORS{
-     pub const ONLY_CALLED_ON_ACCOUNT_CREATION:felt252 = 'ERROR: call in a constructor';
+     pub const ONLY_ACCOUNT_OWNER_CAN_REGISTER:felt252 = 'Only account owner can register';
    }
   #[abi(embed_v0)]
    impl IGlobalAccountRegistryImpl of super::IGlobalAccountRegistry<ContractState>{
     fn register_account(ref self:ContractState,name : felt252 , address :ContractAddress){
         let caller =starknet::get_caller_address();
-        assert(caller == address,ERRORS::ONLY_CALLED_ON_ACCOUNT_CREATION);
+        assert(caller == address,ERRORS::ONLY_ACCOUNT_OWNER_CAN_REGISTER);
         self.account.write(name,address);
 
     }

@@ -10,7 +10,7 @@ fn test_address_deploy(){
     let address = deploy_registry();
     assert_eq!(address, ACCOUNT_REGISTRY_TEST_ADDRESS.try_into().unwrap(),"ADDRESS DOESNT MATCH");
 }
-#[should_panic(expected :'ERROR: call in a constructor')]
+#[should_panic(expected :'Only account owner can register')]
 #[test]
 fn test_failed_register_account(){
    let contract_address = deploy_registry();
