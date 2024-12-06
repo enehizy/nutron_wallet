@@ -24,7 +24,7 @@ fn test_valid__execute__(){
     wallet.__execute__(calls);
 }
 #[test]
-#[should_panic(expected:'invalid signature')]
+#[should_panic(expected:'ERROR: invalid signature')]
 fn test_invalid__execute__(){
     let contract_address =deploy_account("Account");
     let wallet= IProtocolAccountDispatcher { contract_address};
@@ -57,7 +57,7 @@ fn test_valid__validate__(){
 }
 
 #[test]
-#[should_panic(expected:'invalid signature')]
+#[should_panic(expected:'ERROR: invalid signature')]
 fn test_invalid__validate__(){
     let contract_address =deploy_account("Account");
     let wallet= IProtocolAccountDispatcher { contract_address};
